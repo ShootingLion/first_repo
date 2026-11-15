@@ -7,15 +7,14 @@ class text_frame(CTkFrame):
         super().__init__(master,fg_color="transparent")
         self.grid_columnconfigure((0,1),weight=1)
         self.entry=CTkEntry(self)
-        self.line=CTkLabel(self,text="you typed in nothing")
-        self.btn=CTkButton(self,text="submit",command=self.change_line)
-
+        self.line=CTkLabel(self,text="to submit press enter",corner_radius=10,border_color="gray40",border_width=3)
+        
         self.entry.grid(row=0,column=0,padx=10,pady=10,sticky="ew",columnspan=2)
-        self.btn.grid(row=1,column=0,padx=10,pady=10,sticky="ew")
-        self.line.grid(row=1,column=1,padx=10,pady=10,sticky="ew")
+        
+        self.line.grid(row=1,column=0,padx=10,pady=10,sticky="ew",columnspan=2)
 
 
-    def change_line(self):
+    def change_line(self,event=None):
         self.line.configure(text="you typed in: "+self.entry.get()) 
 
 
@@ -116,6 +115,8 @@ class App(CTk):
         self.cool_func=text_frame(self)
         self.cool_func.grid(row=4,column=0,padx=10,pady=10,sticky="nesw",columnspan=2)
 
+        frame_var=self.cool_func
+        frame_var.entry.bind("<Return>",lambda event : frame_var.change_line())
     def center(self):
     
         scaling= ScalingTracker.get_window_scaling(self)
