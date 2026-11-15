@@ -2,6 +2,24 @@ from customtkinter import *
 
 set_appearance_mode("dark")
 
+class text_frame(CTkFrame):
+    def __init__(self,master):
+        super().__init__(master,fg_color="transparent")
+        self.grid_columnconfigure((0,1),weight=1)
+        self.entry=CTkEntry(self)
+        self.line=CTkLabel(self,text="you typed in nothing")
+        self.btn=CTkButton(self,text="submit",command=self.change_line)
+
+        self.entry.grid(row=0,column=0,padx=10,pady=10,sticky="ew",columnspan=2)
+        self.btn.grid(row=1,column=0,padx=10,pady=10,sticky="ew")
+        self.line.grid(row=1,column=1,padx=10,pady=10,sticky="ew")
+
+
+    def change_line(self):
+        self.line.configure(text="you typed in: "+self.entry.get()) 
+
+
+    
 class Radio_Frame(CTkScrollableFrame):
     def __init__(self,master,values,title,color=None):
         super().__init__(master,fg_color=color,label_text=title)
@@ -67,7 +85,7 @@ class App(CTk):
         self.grid_columnconfigure((0,1),weight=1)
         self.grid_rowconfigure((0,2), weight=1)
 
-        self.checkboxframe = CheckboxFrame(self, values=["value 1","value 2","value diddy","bye woody"],
+        self.checkboxframe = CheckboxFrame(self, values=["value 1","value 2","value 3","bye woody"],
                                            title="first frame")
         self.checkboxframe.grid(row=0,column=0,padx=10,pady=10,sticky="nesw")
 
@@ -78,7 +96,7 @@ class App(CTk):
         self.radioframe.no_bar()
         self.radioframe.grid(row=2,column=0,padx=10,pady=10,sticky="nesw")
         
-        self.radfram2=Radio_Frame(master=self,values=["did","dy","blud"],title="sillieness",color="indigo")
+        self.radfram2=Radio_Frame(master=self,values=["","do","45"],title="2",color="indigo")
         self.radfram2.no_bar()
         self.radfram2.grid(row=2,column=1,padx=10,pady=10,sticky="nesw")
         
@@ -90,10 +108,13 @@ class App(CTk):
         self.radio_btn.grid(row=3,column=0,padx=10,pady=10,sticky='ew',columnspan=2)
 
         self.center=CTkButton(self,text="center",command=self.center)
-        self.center.grid(row=4,column=0,padx=10,pady=10,sticky="ew")
+        self.center.grid(row=5,column=0,padx=10,pady=10,sticky="ew")
 
         self.toggle=CTkButton(self,text="maximize",command=self.toggle_size)
-        self.toggle.grid(row=4,column=1,padx=10,pady=10,sticky="ew")
+        self.toggle.grid(row=5,column=1,padx=10,pady=10,sticky="ew")
+
+        self.cool_func=text_frame(self)
+        self.cool_func.grid(row=4,column=0,padx=10,pady=10,sticky="nesw",columnspan=2)
 
     def center(self):
     
