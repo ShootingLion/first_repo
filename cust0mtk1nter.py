@@ -117,6 +117,9 @@ class App(CTk):
 
         frame_var=self.cool_func
         frame_var.entry.bind("<Return>",lambda event : frame_var.change_line())
+
+        #frame_var=self.
+
     def center(self):
     
         scaling= ScalingTracker.get_window_scaling(self)
