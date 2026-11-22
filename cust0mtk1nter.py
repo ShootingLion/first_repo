@@ -76,8 +76,8 @@ class App(CTk):
         super().__init__()
         
         self.title("window")
-        self.x_size=800
-        self.y_size=600
+        self.x_size=900
+        self.y_size=750
         self.geometry(f"{self.x_size}x{self.y_size}")
         self.center()
 
@@ -118,8 +118,14 @@ class App(CTk):
         frame_var=self.cool_func
         frame_var.entry.bind("<Return>",lambda event : frame_var.change_line())
 
-        #frame_var=self.
+        self.option=CTkOptionMenu(self,values=["option 1","option 2","option 3"],command=self.change_option)
+        self.option.grid(row=6,column=0,padx=10,pady=10,sticky="ew",columnspan=1)
 
+        self.combo=CTkComboBox(self,values=["option 1","option 2","option 3"],command=self.change_option)
+        self.combo.grid(row=6,column=1,padx=10,pady=10,sticky="ew",columnspan=1)
+
+    def change_option(self,option):
+        print("selected option:",option)
     def center(self):
     
         scaling= ScalingTracker.get_window_scaling(self)
