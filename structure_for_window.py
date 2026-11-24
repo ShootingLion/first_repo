@@ -12,6 +12,12 @@ class tabclass(CTkTabview):
             self.tab(name).grid_rowconfigure(0,weight=1)
 
 
+
+
+
+
+#this  is all for monthly timetabe
+
 class week (CTkFrame):
     def __init__(self,master,week_number):
         super().__init__(master,bg_color="transparent")
@@ -52,6 +58,57 @@ class default_frame(CTkFrame):
     def __init__(self,master,color):
         super().__init__(master,border_color=color,border_width=3,corner_radius=10)
 
+
+
+class columns(CTkScrollableFrame):
+    def __init__(self, master):
+        super().__init__(master)
+        self.grid_columnconfigure((0,1,2),weight=1)
+        self.day_list=[]
+        varmessage=""
+        for i in range(0,3):
+            if i==0:
+                varmessage="today"
+            elif i==1:
+                varmessage="tommorow"
+
+            else:
+                varmessage="after tommorow"
+
+
+            var_day=dailyView(self,incriments=1,text_i=varmessage)
+            var_day.grid(row=0,column=i,sticky="nesw")
+            self.day_list.append(var_day)
+        
+
+
+class dailyView(CTkFrame):
+    def __init__(self, master,incriments,text_i):
+        super().__init__(master)
+        self.incriments=incriments
+        self.grid_columnconfigure(0,weight=1)
+        title=CTkLabel (self,text=text_i)
+        title.grid(row=0,column=0,sticky="nesw")
+        
+        self.buttn_list=[]
+        #i want the frame to go from 10am to 10pm
+
+        #increments will be in 1 hours. e.g an increment
+        #value of 1, means each timeslot will be 1 hour long
+        print(int(12/incriments))
+        for i in range(12):
+            btn=CTkButton(self,text="add activity")
+            btn.grid(row=i+1,column=0,sticky="nesw")
+            self.buttn_list.append(btn)
+        
+            
+
+
+
+
+
+
+#main class
 class App (CTk):
     def __init__(self):
         super().__init__()
@@ -66,9 +123,11 @@ class App (CTk):
         self.tab=tabclass(self.frame_for_tab)
         self.tab.pack(fill="both",expand=True,padx=10,pady=10)
         
-        
         self.timetable=grid(self.tab.tab("monthly timetable"), numb_weeks=4)
         self.timetable.grid(row=0,column=0,padx=10,pady=10,sticky="nesw")
+
+        self.day_grid=columns(self.tab.tab("weekly timetable"))
+        self.day_grid.grid(row=0,column=0,padx=10,pady=10,sticky="nesw")
 
         self.vertical=default_frame(self,color="gray")
         self.vertical.grid(row=0,column=0,padx=10,pady=10,sticky="nesw")
